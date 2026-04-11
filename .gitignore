@@ -15,8 +15,9 @@ venv/
 .venv/
 env/
 
-# Database (考生数据，不上传)
+# Database (临时数据库不上传，但 gaokao.db 是必需数据)
 *.db
+!data/db/gaokao.db
 *.sqlite
 
 # Logs

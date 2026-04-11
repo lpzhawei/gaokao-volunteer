@@ -53,7 +53,12 @@
 - Windows 10/11
 - 4GB+ 内存
 
-### 安装依赖
+### 方式一：一键安装（推荐）
+
+1. 双击 `setup.bat` — 自动创建虚拟环境并安装依赖
+2. 双击 `启动系统.bat` — 启动程序
+
+### 方式二：手动安装
 
 ```bash
 git clone https://github.com/lpzhawei/gaokao-volunteer.git
@@ -61,8 +66,6 @@ cd gaokao_volunteer
 
 python -m venv venv
 venv\Scripts\activate      # Windows
-# source venv/bin/activate  # Linux/macOS
-
 pip install -r requirements.txt
 ```
 
@@ -73,6 +76,8 @@ python main.py
 ```
 
 或双击 `启动系统.bat`
+
+> 数据库已内置（`data/db/gaokao.db`），包含 2023-2025 年河北省投档数据，开箱即用。
 
 ### 打包为 exe
 
@@ -106,8 +111,9 @@ pyinstaller gaokao.spec
 ```
 gaokao_volunteer/
 ├── main.py                    # 程序入口
+├── setup.bat                  # 一键安装脚本
+├── 启动系统.bat                # 一键启动脚本
 ├── requirements.txt           # 依赖列表
-├── gaokao.spec               # PyInstaller 打包配置
 ├── resources/
 │   └── icon.ico              # 应用图标
 │
@@ -134,7 +140,7 @@ gaokao_volunteer/
 │       └── hexagram_chart.py  #   六爻统计图
 │
 ├── data/
-│   └── db/gaokao.db           # SQLite 数据库（自动创建）
+│   └── db/gaokao.db           # SQLite 数据库（已内置，开箱即用）
 │
 └── tests/                     # 单元测试
     ├── test_scoring.py
@@ -196,11 +202,8 @@ gaokao_volunteer/
 ## 🧪 测试
 
 ```bash
-# 运行全部单元测试
+# 运行全部单元测试（86 个用例）
 python -m pytest tests/ -v
-
-# 运行场景测试（570分/480分两个案例）
-python test_scenarios.py
 ```
 
 ---
