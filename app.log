@@ -1,0 +1,42 @@
+2026-04-08 02:20:07,074 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:20:07,075 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:21:26,959 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:21:26,960 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:22:19,939 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:22:19,939 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:23:14,305 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:23:14,306 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:24:56,392 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:24:56,392 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:27:06,669 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:27:06,670 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:29:47,701 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:29:47,702 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:31:49,188 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:31:49,189 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:32:54,196 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:32:54,197 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:33:51,636 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:33:51,636 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:38:12,317 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:38:12,318 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:40:18,177 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:40:18,177 [INFO] __main__: 数据库初始化成功
+2026-04-08 02:41:23,427 [INFO] src.core.exporter: Excel导出完成：C:\Users\lpzha\AppData\Local\河北高考志愿填报系统\output\志愿表_考生_20260408_024123.xlsx
+2026-04-08 02:43:10,383 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-08 02:43:10,383 [INFO] __main__: 数据库初始化成功
+2026-04-09 19:44:12,472 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-09 19:44:12,473 [INFO] __main__: 数据库初始化成功
+2026-04-09 20:21:49,251 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-09 20:21:49,252 [INFO] __main__: 数据库初始化成功
+2026-04-09 20:26:10,944 [INFO] src.core.exporter: Excel导出完成：C:\Users\lpzha\Desktop\志愿表_20260409_202606.xlsx
+2026-04-09 20:31:38,703 [INFO] src.core.exporter: Excel导出完成：C:\Users\lpzha\Desktop\志愿表_20260409_203135.xlsx
+2026-04-09 20:43:08,941 [INFO] src.data.importer: Excel文件共 1 个Sheet: ['Sheet1']
+2026-04-09 20:43:09,388 [INFO] src.data.importer: Sheet[Sheet1] 解析到 6678 行
+2026-04-09 20:43:10,528 [INFO] src.data.importer: 写入完成：6649 条投档记录，1003 所院校
+2026-04-10 00:47:57,343 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-10 00:47:57,344 [INFO] __main__: 数据库初始化成功
+2026-04-10 00:57:49,914 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-10 00:57:49,915 [INFO] __main__: 数据库初始化成功
+2026-04-10 01:14:20,800 [INFO] __main__: 使用数据库：C:\Users\lpzha\WorkBuddy\20260329193053\gaokao_volunteer\data\db\gaokao.db
+2026-04-10 01:14:20,801 [INFO] __main__: 数据库初始化成功
