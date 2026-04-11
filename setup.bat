@@ -1,40 +1,38 @@
 @echo off
-chcp 65001 > nul
 cd /d "%~dp0"
 
 echo ============================================
-echo   河北省高考志愿填报系统 - 环境安装
+echo   Hebei Gaokao Volunteer System - Setup
 echo ============================================
 echo.
 
-REM 检查 Python 是否安装
 where python > nul 2>&1
 if %errorlevel% neq 0 (
-    echo [错误] 未检测到 Python，请先安装 Python 3.10 或更高版本
-    echo 下载地址：https://www.python.org/downloads/
-    echo 安装时请勾选 "Add Python to PATH"
+    echo [ERROR] Python not found. Please install Python 3.10+
+    echo Download: https://www.python.org/downloads/
+    echo Remember to check "Add Python to PATH"
     pause
     exit /b 1
 )
 
-echo [1/3] 正在创建虚拟环境...
+echo [1/3] Creating virtual environment...
 python -m venv venv
 if %errorlevel% neq 0 (
-    echo [错误] 创建虚拟环境失败
+    echo [ERROR] Failed to create venv
     pause
     exit /b 1
 )
 
-echo [2/3] 正在安装依赖包（首次安装可能需要几分钟）...
+echo [2/3] Installing dependencies (may take a few minutes)...
 venv\Scripts\pip.exe install -r requirements.txt -q
 if %errorlevel% neq 0 (
-    echo [错误] 安装依赖失败
+    echo [ERROR] Failed to install dependencies
     pause
     exit /b 1
 )
 
-echo [3/3] 安装完成！
+echo [3/3] Done!
 echo.
-echo 现在可以双击 "启动系统.bat" 运行程序了
+echo Now double-click "run.bat" to start the program
 echo.
 pause
