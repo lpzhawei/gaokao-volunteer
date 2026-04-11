@@ -56,7 +56,7 @@
 ### 方式一：一键安装（推荐）
 
 1. 双击 `setup.bat` — 自动创建虚拟环境并安装依赖
-2. 双击 `启动系统.bat` — 启动程序
+2. 双击 `run.bat` — 启动程序
 
 ### 方式二：手动安装
 
@@ -75,7 +75,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-或双击 `启动系统.bat`
+或双击 `run.bat`
 
 > 数据库已内置（`data/db/gaokao.db`），包含 2023-2025 年河北省投档数据，开箱即用。
 
@@ -112,7 +112,7 @@ pyinstaller gaokao.spec
 gaokao_volunteer/
 ├── main.py                    # 程序入口
 ├── setup.bat                  # 一键安装脚本
-├── 启动系统.bat                # 一键启动脚本
+├── run.bat                    # 一键启动脚本
 ├── requirements.txt           # 依赖列表
 ├── resources/
 │   └── icon.ico              # 应用图标
