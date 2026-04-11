@@ -15,7 +15,7 @@ venv/
 .venv/
 env/
 
-# Database
+# Database (考生数据，不上传)
 *.db
 *.sqlite
 
@@ -32,6 +32,37 @@ env/
 .DS_Store
 Thumbs.db
 
-# Windows
+# Windows DLL
 *.dll
 *.pyd
+
+# WorkBuddy
+.workbuddy/
+
+# 原始 xlsx 数据文件（版权问题）
+data/xlsx/
+
+# 安装包（太大）
+installer/
+
+# 临时分析脚本
+analyze_db.py
+analyze_ref.py
+check_body.py
+check_match.py
+check_match2.py
+test_labels.py
+test_scenarios.py
+quick_test.py
+full_test.py
+
+# 打包配置（本地构建用）
+gaokao.spec
+
+# 自动生成脚本
+create_icon.py
+create_manual_pdf.py
+gen_manual.py
+gen_project_pdf.py
+migrate_db.py
+migrate_db_v2.py
