@@ -294,7 +294,7 @@ class InputPanel(QWidget):
             "好城市=更多实习机会+更宽人脉+更好视野。",
             tip_type="info"
         )
-        zxf_hint.setFixedHeight(60)
+        zxf_hint.setMinimumHeight(70)
         fl_strat.addRow("", zxf_hint)
 
         form_layout.addWidget(grp_strategy)
