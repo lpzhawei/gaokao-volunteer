@@ -9,6 +9,8 @@ from src.core.filters import (
     passes_filter,
     passes_rank_filter,
     major_matches,
+    is_joint_program,
+    parse_tuition_value,
     is_police_major,
 )
 
@@ -230,14 +232,62 @@ class TestCollegeNature:
         item = {"college_nature": "中外合作"}
         assert passes_filter(item, clean_profile) is False
 
+    def test_reject_joint_when_marker_is_only_in_major_name(self, clean_profile):
+        clean_profile.accept_joint = False
+        item = {
+            "college_nature": "公办",
+            "major_name": "计算机科学与技术(中外合作办学)",
+        }
+        assert passes_filter(item, clean_profile) is False
+
     def test_accept_joint(self, clean_profile):
         item = {"college_nature": "中外合作"}
         assert passes_filter(item, clean_profile) is True
 
 
+class TestJointProgramDetection:
+    def test_detects_joint_from_college_nature(self):
+        item = {"college_nature": "中外合作"}
+        assert is_joint_program(item) is True
+
+    def test_detects_joint_from_major_name(self):
+        item = {"college_nature": "公办", "major_name": "金融学(中外合作办学)"}
+        assert is_joint_program(item) is True
+
+    def test_detects_joint_from_college_name(self):
+        item = {"college_name": "某某大学[内地与港澳台地区合作办学]"}
+        assert is_joint_program(item) is True
+
+
 # ═══════════════════════════════════════════════════════
 # 6. 选科要求过滤（使用 clean_profile）
 # ═══════════════════════════════════════════════════════
+
+class TestTuitionFilter:
+    def test_parse_numeric_tuition(self):
+        assert parse_tuition_value("20000") == 20000
+
+    def test_parse_textual_tuition(self):
+        assert parse_tuition_value("22000元/年") == 22000
+
+    def test_parse_unknown_tuition_as_zero(self):
+        assert parse_tuition_value("待定") == 0
+
+    def test_reject_high_tuition_when_limit_set(self, clean_profile):
+        clean_profile.max_tuition = 20000
+        item = {"college_nature": "公办", "elective_req": "不限", "tuition": "22000"}
+        assert passes_filter(item, clean_profile) is False
+
+    def test_accept_low_tuition_when_limit_set(self, clean_profile):
+        clean_profile.max_tuition = 20000
+        item = {"college_nature": "公办", "elective_req": "不限", "tuition": "8000"}
+        assert passes_filter(item, clean_profile) is True
+
+    def test_unknown_tuition_not_filtered(self, clean_profile):
+        clean_profile.max_tuition = 20000
+        item = {"college_nature": "公办", "elective_req": "不限", "tuition": "待定"}
+        assert passes_filter(item, clean_profile) is True
+
 
 class TestElectiveRequirement:
     def test_no_requirement(self, clean_profile):

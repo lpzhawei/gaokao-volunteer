@@ -200,6 +200,37 @@ def major_matches(major_name: str, pref_majors: list) -> bool:
     return False
 
 
+def is_joint_program(item: dict) -> bool:
+    """识别中外合作/合作办学项目。
+
+    真实数据里有一部分记录会把项目性质写在 major_name，而 college_nature 仍然是“公办”。
+    这里统一做多字段兜底，避免“不接受中外合作”时漏过滤。
+    """
+    markers = ("中外合作", "合作办学", "内地与港澳台地区合作办学")
+    fields = (
+        item.get("college_nature", "") or "",
+        item.get("major_name", "") or "",
+        item.get("college_name", "") or "",
+    )
+    return any(marker in field for field in fields for marker in markers)
+
+
+def parse_tuition_value(tuition) -> int:
+    """把数据库里的学费字段尽量解析成整数，无法识别时返回 0。"""
+    if tuition is None:
+        return 0
+
+    if isinstance(tuition, (int, float)):
+        return int(tuition)
+
+    text = str(tuition).strip()
+    if not text:
+        return 0
+
+    digits = "".join(ch for ch in text if ch.isdigit())
+    return int(digits) if digits else 0
+
+
 def passes_filter(item: dict, profile, strict_province: bool = True,
                   strict_major: bool = True) -> bool:
     """综合筛选（办学性质、选科要求、省份偏好、专业偏好等）
@@ -210,8 +241,12 @@ def passes_filter(item: dict, profile, strict_province: bool = True,
     nature = item.get("college_nature", "公办")
     if not profile.accept_private and ("民办" in nature or "独立学院" in nature):
         return False
-    if not profile.accept_joint and ("中外合作" in nature or "合作办学" in nature):
+    if not profile.accept_joint and is_joint_program(item):
         return False
+    if getattr(profile, "max_tuition", 0) > 0:
+        tuition_val = parse_tuition_value(item.get("tuition", ""))
+        if tuition_val >= profile.max_tuition:
+            return False
 
     if strict_province and profile.pref_provinces:
         province = item.get("province", "")

@@ -16,35 +16,43 @@ class TestCalcProbByRank:
     def test_negative_rank_diff_high_prob(self):
         """考生位次更好（rank_diff < 0），高概率"""
         prob = calc_prob_by_rank(-10000)
-        assert prob == 0.97  # 保底，概率高
+        assert 0.98 < prob < 0.99  # 物理类保底，概率很高
 
-    def test_zero_rank_diff_high_prob(self):
-        """位次差为0，高概率"""
+    def test_zero_rank_diff_physics_calibrated(self):
+        """物理类压线不是 97%，应接近历史回测值"""
         prob = calc_prob_by_rank(0)
-        assert prob == 0.97
+        assert 0.80 < prob < 0.83
+
+    def test_zero_rank_diff_history_calibrated(self):
+        """历史类压线显著低于物理类"""
+        prob = calc_prob_by_rank(0, "历史")
+        assert 0.49 < prob < 0.51
 
     def test_small_positive_diff(self):
-        """位次差小（冲刺），概率降低但不算太低"""
+        """物理类小幅冲刺时仍有一定机会"""
         prob = calc_prob_by_rank(3000)
-        # z=0.2, 1/(1+exp(0.2))≈0.45
-        assert 0.3 < prob < 0.6
+        assert 0.5 < prob < 0.6
+
+    def test_history_small_positive_diff_drops_fast(self):
+        """历史类对小幅冲刺更敏感"""
+        prob = calc_prob_by_rank(2000, "历史")
+        assert 0.08 < prob < 0.09
 
     def test_large_positive_diff(self):
         """位次差大（冲刺很远），概率很低"""
-        prob = calc_prob_by_rank(60000)
-        # z=4, 1/(1+exp(4))≈0.018 → clamped to 0.03
-        assert prob == 0.03
+        prob = calc_prob_by_rank(30000)
+        assert 0.01 < prob < 0.02
 
     def test_very_large_diff(self):
-        """极大位次差（冲刺极远），概率极低"""
+        """极大位次差（冲刺极远），概率贴近下限"""
         prob = calc_prob_by_rank(100000)
-        assert prob == 0.03
+        assert prob < 0.02
 
     def test_probability_range(self):
-        """概率始终在 [0.03, 0.97] 范围内"""
+        """概率始终在 [0, 1] 范围内"""
         for rd in [-50000, -1000, 0, 1000, 30000, 60000, 100000]:
             prob = calc_prob_by_rank(rd)
-            assert 0.03 <= prob <= 0.97, f"rank_diff={rd}, prob={prob}"
+            assert 0.0 <= prob <= 1.0, f"rank_diff={rd}, prob={prob}"
 
     def test_chong_lower_prob_than_bao(self):
         """冲刺的概率应该低于保底（核心逻辑验证）"""

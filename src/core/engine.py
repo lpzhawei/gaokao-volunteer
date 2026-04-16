@@ -69,44 +69,32 @@ class RecommendEngine:
             # 检查 schema 是否有新列
             cur.execute("PRAGMA table_info(admission_data)")
             columns = {row[1] for row in cur.fetchall()}
-            has_extended_cols = 'city' in columns
+            optional_columns = {
+                "city": "''",
+                "city_level": "''",
+                "major_track": "''",
+                "tuition": "0",
+                "color_restrict_detail": "''",
+            }
+            optional_selects = []
+            for col, default in optional_columns.items():
+                if col in columns:
+                    optional_selects.append(f"COALESCE(a.{col}, {default}) AS {col}")
+                else:
+                    optional_selects.append(f"{default} AS {col}")
 
-            if has_extended_cols:
-                # 新 schema：包含 city/city_level/major_track 等
-                cur.execute("""
-                    SELECT 
-                        a.college_code, a.college_name, a.major_name, a.subject_type,
-                        a.batch, a.province,
-                        a.min_score, a.max_score, a.avg_score, a.min_rank, a.plan_count, a.actual_count,
-                        a.body_restrict,
-                        a.elective_req,
-                        a.college_nature,
-                        COALESCE(a.city, '') AS city,
-                        COALESCE(a.city_level, '') AS city_level,
-                        COALESCE(a.major_track, '') AS major_track,
-                        COALESCE(a.tuition, 0) AS tuition,
-                        COALESCE(a.color_restrict_detail, '') AS color_restrict_detail
-                    FROM admission_data a
-                    WHERE a.subject_type=? AND a.year=2025
-                """, [self.profile.subject_first])
-            else:
-                # 旧 schema：只有基础列
-                cur.execute("""
-                    SELECT 
-                        a.college_code, a.college_name, a.major_name, a.subject_type,
-                        a.batch, a.province,
-                        a.min_score, a.max_score, a.avg_score, a.min_rank, a.plan_count, a.actual_count,
-                        a.body_restrict,
-                        a.elective_req,
-                        a.college_nature,
-                        '' AS city,
-                        '' AS city_level,
-                        '' AS major_track,
-                        0 AS tuition,
-                        '' AS color_restrict_detail
-                    FROM admission_data a
-                    WHERE a.subject_type=? AND a.year=2025
-                """, [self.profile.subject_first])
+            cur.execute(f"""
+                SELECT 
+                    a.college_code, a.college_name, a.major_name, a.subject_type,
+                    a.batch, a.province,
+                    a.min_score, a.max_score, a.avg_score, a.min_rank, a.plan_count, a.actual_count,
+                    a.body_restrict,
+                    a.elective_req,
+                    a.college_nature,
+                    {", ".join(optional_selects)}
+                FROM admission_data a
+                WHERE a.subject_type=? AND a.year=2025
+            """, [self.profile.subject_first])
 
             rows = [dict(r) for r in cur.fetchall()]
 
@@ -261,7 +249,7 @@ class RecommendEngine:
             it["min_rank_2025"] = min_rank_2025
             it["rank_diff"] = student_rank - min_rank_2025 if min_rank_2025 > 0 else 0
             it["score_diff"] = student_equiv_score - (it.get("min_score") or 0)
-            it["prob"] = calc_prob_by_rank(it["rank_diff"])
+            it["prob"] = calc_prob_by_rank(it["rank_diff"], self.profile.subject_first)
             it["composite"] = calc_pref_score(it, self.profile.pref_majors, self.profile.pref_provinces)
 
         # ── 9. 张雪峰策略加权 ─────────────────────────────

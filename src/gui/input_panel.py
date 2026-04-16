@@ -354,6 +354,11 @@ class InputPanel(QWidget):
         self.chk_joint.setChecked(True)
         fl_other.addRow("", self.chk_joint)
 
+        self.chk_high_tuition = QCheckBox("接受高学费项目（2万元/年以上）")
+        self.chk_high_tuition.setChecked(True)
+        self.chk_high_tuition.setToolTip("取消勾选后，将过滤学费大于等于 20000 元/年的项目")
+        fl_other.addRow("", self.chk_high_tuition)
+
         self.cmb_batch = QComboBox()
         self.cmb_batch.addItems(["本科批", "本科提前批", "专科批", "全部"])
         fl_other.addRow("志愿批次：", self.cmb_batch)
@@ -479,6 +484,7 @@ class InputPanel(QWidget):
             "pref_provinces":  selected_provs,
             "accept_private":  self.chk_private.isChecked(),
             "accept_joint":    self.chk_joint.isChecked(),
+            "max_tuition":     0 if self.chk_high_tuition.isChecked() else 20000,
             "rank_offset_neg":  self.slider_chong.value(),
             "rank_offset_pos":  self.slider_bao.value(),
             # 张雪峰策略
@@ -595,6 +601,7 @@ class InputPanel(QWidget):
             pref_provinces     = info["pref_provinces"],
             accept_private     = info["accept_private"],
             accept_joint       = info["accept_joint"],
+            max_tuition        = info["max_tuition"],
             rank_2026          = info["rank_2026"],
             rank_offset_neg    = info["rank_offset_neg"],
             rank_offset_pos    = info["rank_offset_pos"],
@@ -673,5 +680,6 @@ class InputPanel(QWidget):
         self._update_rank_display()
         self.chk_private.setChecked(True)
         self.chk_joint.setChecked(True)
+        self.chk_high_tuition.setChecked(True)
         self.txt_log.clear()
         self._log("表单已重置")
